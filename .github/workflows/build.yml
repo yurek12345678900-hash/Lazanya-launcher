@@ -1,0 +1,29 @@
+name: Build Launcher APK
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Depoyu Klonla
+      uses: actions/checkout@v3
+
+    - name: JDK 17 Kurulumu
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Gradle ile APK Derle
+      run: ./gradlew assembleDebug
+
+    - name: APK Dosyasını Kaydet
+      uses: actions/upload-artifact@v3
+      with:
+        name: minecraft-launcher
+        path: app/build/outputs/apk/debug/app-debug.apk
+        
